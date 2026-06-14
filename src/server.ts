@@ -1,13 +1,16 @@
+import "dotenv/config";
 import app from "./app";
-import dotenv from "dotenv";
+import { connectDB } from "./database/connection";
+import { env } from "./config/env";
 
+const startServer = async () => {
+  await connectDB();
 
-dotenv.config();
+  const PORT = env.port;
 
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  });
+};
 
-const PORT = process.env.PORT || 3030;
-
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`)
-});
+startServer();
